@@ -1,6 +1,6 @@
 # Universal PCB - by Toodles
 
-An arcade stick controller PCB to provide compatibility with as many devices as possible.
+A universal arcade stick controller PCB (UPCB - Universal Programmed Controller Board), designed to provide compatibility with as many devices as possible.
 
 Imagine you buy a new Sega Saturn, and you've never had one before. You do already have an arcade stick with the UPCB in it that you play all the time on other systems. In order to use your stick on the new Saturn, you would need:
 
