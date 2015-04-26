@@ -49,52 +49,41 @@ void NES_main(void)
 	bU=bD=bL=bR=bSt=bSe=bB=bA=1;
 	NES_Init_Pins();
 	NES_DATA=0;
-	while(!NES_LATCH); //sit and spin until up.
-	while(1)
-	{
-		/*
-			1		A
-			2		B
-			3		Select
-			4		Start
-			5		Up
-			6		Down
-			7		Left
-			8		Right */
-		//if we're here, latch is up
-		//output first bit
-		NES_DATA=bA;
-		//wait until clock drops
-		while(NES_CLOCK);    //first drop, send second bit
-		if (NES_Send_Bit(bB)) continue; 
-			//point of second drop, send third bit
-		if (NES_Send_Bit(bSe)) continue; 
-			//point of third drop, send fourth bit
-		if (NES_Send_Bit(bSt)) continue; 
-			//point of fourth drop, send fifth bit
-		if (NES_Send_Bit(bU)) continue; 
-			//point of fifth drop, send sixth bit
-		if (NES_Send_Bit(bD)) continue; 
-			//point of sixth drop, send seventh bit
-		if (NES_Send_Bit(bL)) continue;
-			//point of seventh drop, send eight bit
-		if (NES_Send_Bit(bR)) continue;
-			//point of eigth drop, send LOW
-		NES_DATA=0;
-		FrameUpdate();
-		while (1)
-		{
-			//end of data. We have time here, so camp out, watch for the Latch to go up, 
-			//and fill up the buffer variables until it does
-			bU=Stick_Up; if (NES_LATCH) break;
-			bD=Stick_Down; if (NES_LATCH) break;
-			bL=Stick_Left; if (NES_LATCH) break;
-			bR=Stick_Right; if (NES_LATCH) break;
-			bSt=Stick_Start; if (NES_LATCH) break;
-			bSe=Stick_Select; if (NES_LATCH) break;
-			bB=Stick_Short; if (NES_LATCH) break;
-			bA=Stick_Forward; if (NES_LATCH) break;
+
+	while(1) {
+		if (NES_LATCH) { //we've seen the latch, store the state & perform output procedure
+
+			bA=Stick_Forward;		
+			bB=Stick_Short;	
+			bSe=Stick_Select;
+			bSt=Stick_Start;
+			bU=Stick_Up;
+			bD=Stick_Down;
+			bL=Stick_Left;
+			bR=Stick_Right;
+	
+			//send the first output (A) until the first clock.
+			NES_DATA=bA;
+			//now wait for the nes clocks, and send the remaining 
+			//outputs in order (B,Sel,St,U,D,L,R)
+			while(!NES_CLOCK);
+			NES_DATA=bB;
+			while(!NES_CLOCK);
+			NES_DATA=bSe;
+			while(!NES_CLOCK);
+			NES_DATA=bSt;
+			while(!NES_CLOCK);
+			NES_DATA=bU;
+			while(!NES_CLOCK);
+			NES_DATA=bD;
+			while(!NES_CLOCK);
+			NES_DATA=bL;
+			while(!NES_CLOCK);
+			NES_DATA=bR;
+			while(!NES_CLOCK); //the final clock signals the end of this data.
+			NES_DATA=0;
+			FrameUpdate();
 		}
-		
-	}
+	}	
 }
+
