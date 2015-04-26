@@ -40,7 +40,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 //#define PROGRAM_BUTTON
 
 #define MAJOR_REV_NUMBER 2
-#define MINOR_REV_NUMBER 5
+#define MINOR_REV_NUMBER 6
 
 /* Defines from here on down setup the extra stuff needed automatically, and should not be changed */
 

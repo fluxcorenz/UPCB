@@ -36,10 +36,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "cd32.h"
 #include "wii.h"
 #include "inttest.h"
-//#include "pcusb.h"
 #include "allusb.h"
 #include "ps3usb.h"
 #include "xboxusb.h"
+#include "n64.h"
 
 /* This must be defined to do the needed remapping using a bootloader
 	custom link script. 'rm18f4550.lkr' should be used if using a bootloader
@@ -241,6 +241,17 @@ void main(void)
 			Program_Load_Mappings(SMA_GC);
 			GC_main();
 		}
+
+		// L L H L L specifies an N64 connector
+		if (	(!PORTEbits.RE2)
+			&&	(!PORTEbits.RE1)
+			&&	(PORTEbits.RE0)
+			&&	(!PORTAbits.RA5)
+			&&	(!PORTBbits.RB1) )
+		{
+			Program_Load_Mappings(SMA_N64);
+			N64_main();
+		}
 		
 		// L L H H specifies a Piggyback connector
 		if (	(!PORTEbits.RE2)
@@ -320,7 +331,7 @@ void main(void)
 	};
 }//end main
 
-//configulation‚ð’Ç‰Á‚µ‚Ü‚µ‚½***********************************************
+//configuration
 /* This sets the PLL Postscaler to divide the primary osc input by 5
 providing 4MHz to the 96MHz PLL. The 96MHz PLL input must always be 4MHz
 as shown in the data sheet.*/
