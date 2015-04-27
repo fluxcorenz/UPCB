@@ -31,6 +31,7 @@ The UPCB can be updated anytime without even needing to open the stick, and with
   - SNES
   - Sega Saturn
   - Sega Genesis (3 and 6 button)
+  - N64
 
 
 - Coded and believed to work, but not tested:
@@ -57,3 +58,17 @@ The UPCB can be updated anytime without even needing to open the stick, and with
 - 'Turbo', adjustable button rapid fire
 
   Press Program by itself, and hold it. Press and hold the button you want to change the speed of. Press Up to make the speed faster, and Down to make the speed slower. 'No turbo' is the same as 'fastest turbo', so to turn it on initially, you'll need to go Down.
+
+## Building
+
+### Requirements:
+- NMake (available with Windows SDK)
+- Microchip C18 compiler (with pa optimisation enabled - available in trial version for 60 days)
+
+To compile the upcb.hex file into the _output directory with default options, run 
+
+`nmake all`
+
+If your Microchip libraries have been installed into another location, specify the `MLIB` option, e.g. `nmake "MLIB=c:\microchip\c18\h" all`
+
+See the DEFFLAGS options in buildall.bat for other build options.
