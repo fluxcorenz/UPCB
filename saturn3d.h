@@ -52,10 +52,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	9				NC - Not connected to anything
 	10				Low
 	11				Low
-	12				5 (SEL/TH)
+	12				5 (REQ/TR)
 	13				7 (D3)
 	14				8 (D2)
-	15				4 (REQ/TR)
+	15				4 (SEL/TH)
 
 	The Saturn sends out data a nibble at a time (4 bits across the 4 data lines).
 	The 3D controller also uses pin 6 to signal to the Saturn that it has data
@@ -67,8 +67,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define SATURN3D_ACK LATEbits.LATE1
 #define SATURN3D_D1 LATEbits.LATE0
 #define SATURN3D_D0 LATAbits.LATA5
-#define SATURN3D_SEL PORTBbits.RB1 //pin 15, read port (request/TR)
-#define SATURN3D_REQ PORTBbits.RB0 //pin 12, read port (select/TH)
+#define SATURN3D_SEL PORTBbits.RB1 //pin 15, read port (select/TH)
+#define SATURN3D_REQ PORTBbits.RB0 //pin 12, read port (request/TR)
 #define SATURN3D_D3 LATCbits.LATC6
 #define SATURN3D_D2 LATCbits.LATC7
 
