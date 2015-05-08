@@ -221,6 +221,7 @@ void N64_main(void)
 				if (!Stick_Roundhouse) N64buffer[1]	|=0b00000001; //c-right
 			}
 			N64_SendResponse(N64buffer, 32);
+			FrameUpdate();
 		}
 	}
 }
