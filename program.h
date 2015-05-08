@@ -56,6 +56,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define SMA_WII		104
 #define SMA_XBOX	112
 #define SMA_N64		120
+#define SMA_SATURN3D	128
 
 //so the system modes can make the bit 0 with currentstate &= STATE_JAB; 
 //S_button commands can return ((currentstate & STATE_JAB)!=0xFFFF)
