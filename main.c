@@ -17,8 +17,8 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-#include <p18cxxx.h>
-#include <delays.h>
+#include <pic18f4550.h>
+#include <delay.h>
 #include "upcb.h"						
 #include "config.h"
 #include "neogeo.h"
@@ -50,10 +50,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #ifdef USE_BOOTLOADER
 extern void _startup (void);        // See c018i.c in your C18 compiler dir
-#pragma code _RESET_INTERRUPT_VECTOR = 0x000800
+#pragma code _RESET_INTERRUPT_VECTOR 0x000800
 void _reset (void)
 {
-    _asm goto _startup _endasm
+    __asm__ ("goto _startup");
 }
 #pragma code
 #endif
@@ -321,11 +321,11 @@ void main(void)
 	mLED_2_Off();
 	while(1)
 	{
-		Delay10KTCYx(250);
-		Delay10KTCYx(250);
-		Delay10KTCYx(250);
-		Delay10KTCYx(250);
-		Delay10KTCYx(200); // at 12 MIPS, 1.2mil cycles augh to = 1 sec
+		delay10ktcy(250);
+		delay10ktcy(250);
+		delay10ktcy(250);
+		delay10ktcy(250);
+		delay10ktcy(200); // at 12 MIPS, 1.2mil cycles augh to = 1 sec
 		mLED_1_Toggle();
 		mLED_2_Toggle();			
 	};

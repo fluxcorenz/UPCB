@@ -82,9 +82,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 							TRISCbits.TRISC6=1;TRISCbits.TRISC7=1; \
 							TRISAbits.TRISA5=1;TRISBbits.TRISB1=1; \
 							TRISBbits.TRISB0=1;
-							
-						//	TRISCbits.TRISC4=1; \
-						//	TRISCbits.TRISC5=1;
+						
 
 							
 #define DISABLE_INTERRUPTS() {while(INTCONbits.GIE) INTCONbits.GIE=0;}  

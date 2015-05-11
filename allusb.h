@@ -133,6 +133,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	
 */
 
+#define rom  __code
+
 // Define the states that the USB interface can be in
 #define	POWERED_STATE	0x00
 #define	DEFAULT_STATE	0x01
@@ -255,10 +257,10 @@ typedef struct BUFDESC {
 } BUFDESC;
 
 
-extern far unsigned char USBBUFFER4[0x100];
-extern far unsigned char USBBUFFER5[0x100];
-extern far BUFDESC *BDPTR;
-extern far unsigned char *FREEUSBBUFFER;
+extern unsigned char USBBUFFER4[0x100];
+extern unsigned char USBBUFFER5[0x100];
+extern BUFDESC *BDPTR;
+extern unsigned char *FREEUSBBUFFER;
 extern unsigned char USB_curr_config;
 extern unsigned char USB_idle_rate;
 extern unsigned char USB_USWSTAT;
