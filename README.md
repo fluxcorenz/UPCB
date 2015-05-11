@@ -71,4 +71,4 @@ To compile the upcb.hex file into the _output directory with default options, ru
 
 If your Microchip libraries have been installed into another location, specify the `MLIB` option, e.g. `nmake "MLIB=c:\microchip\c18\h" all`
 
-See the DEFFLAGS options in buildall.bat for other build options.
+Set DEFFLAGS options as per config.h for other build options, for example to build with LEDs and programming button, run `nmake "DEFFLAGS=-DPROGRAM_BUTTON -DSTATUS_LEDS" all`
