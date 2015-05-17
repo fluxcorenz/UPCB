@@ -20,8 +20,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 /* UPCB module for Nintendo Entertainment System/Famicom support
+
 	The pinout of the American NES controller is well documented, 
-	however there is some descrepancy when talking about the 
+	however there is some discrepancy when talking about the 
 	Japanese Famicom. The internal workings of the controllers is
 	the same, so if you can figure out which lines are the clock,
 	latch, and data, a cable for Famicom use can be easily made 
@@ -31,7 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	____	
 	|   \	
 	|1   \
-	|2	7|
+	|2  7|
 	|3  6|
 	|4  5|
 	------
@@ -44,51 +45,55 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	6		N/C
 	7		VCC (+5v)
 		
-	The Clock Latch and Data cycle is described in detail in snes.h. 
-	All we need know is different is the order of the bits sent to
-	the console:
-	Bit 	Button
-	1		A
-	2		B
-	3		Select
-	4		Start
-	5		Up
-	6		Down
-	7		Left
-	8		Right
-	
 	To make a UPCB cable for the NES/Famicom, match up pins like this:
 	D-Sub 15 Pin		NES Pin
-	1					1 (GND)
-	2					Low
-	3					Low
-	4					Low
-	5					Low
-	6					Low
-	7					Low
-	8					7 (VCC)
-	9					NC - Not connected to anything
-	10					High
-	11					High
-	12					3 (Latch)
-	13					2 (Clock)	
-	14					4 (Data)
-	15					Low
+	1			1 (GND)
+	2			Low
+	3			Low
+	4			Low
+	5			Low
+	6			Low
+	7			Low
+	8			7 (VCC)
+	9			NC - Not connected to anything
+	10			High
+	11			High
+	12			3 (Latch)
+	13			2 (Clock)	
+	14			4 (Data)
+	15			Low
+
+	PAL NES have 'region locked' controllers - NTSC controllers 
+	won't work on them without modification. Either modify the 
+	PAL console (bridge the diodes on the boards on the controller
+        ports - see http://retrogamester.shitfaced.eu/2010/05/how-to-
+	be-able-to-use-any-controller-on.html), or you can use pull-up
+       	resistors between any High/VCC pin and the Latch and Clock 
+	pins (i.e. a resistor between pin 8 and 12, and another 
+	between 8 and 13). The value for these resistors in an 
+	official PAL NES pad is 3.6k ohm, however 4.7k or 5k will 
+	probably work as well.
+        Unfortunately I've had problems with using this code on a PAL
+	NES with an XBOX360 pad piggybacked. Unplugging the piggyback
+	fixes the issue.	
 	
-	Update: Original NES code didn't work, so I finally warmed up the oscope for a peek. 
+	Protocol:
 	At rest, Latch is low, clock is high, and data is low. 
-	Latch goes high, and data immediately shows the first bit. After about 3-4us, latch drops,
-	and a few (6ish?) us after, the clock line drops for about 1us. Data line changes state on the RISING 
-	edge of the clock, pushing the next bit out. Clock stays high for about 9us before dropping again
-	On the 8th drop of the clock line, the data line goes
-	back to its at rest low state. 
+	Latch goes high, and data immediately shows the first bit. 
+	After about 3-4us, latch drops, and a few (6ish?) us after,
+       	the clock line drops for about 1us. Data line changes state 
+	on the RISING edge of the clock, pushing the next bit out. 
+	Clock stays high for about 9us before dropping again.
+	On the 8th drop of the clock line, the data line goes back 
+	to its at rest low state. 
 	
 	_____-__________________________________________________ Latch
 	---------_----_----_-----_----_----_----_----_---------- Clock
 	_____(b0 )(b1 )(b2 )(b3  )(b4 )(b5 )(b6 )(b7 )__________ Data
-	(not to scale, natch. Testing/viewed on a Super Mario Bros. & Duck Hunt cartridge)
-	CD4021 chip shifts out the next bit on the rising edge; NES most likely reads on the 
-	falling edge.
+	(not to scale, natch. Testing/viewed on a Super Mario Bros. & 
+	Duck Hunt cartridge)
+	CD4021 chip shifts out the next bit on the rising clock edge; 
+	NES reads on the falling edge.
 */
 
 #define NES_CLOCK 		PORTCbits.RC6
@@ -97,7 +102,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 /* Prototypes */
 void NES_Init_Pins(void);
-unsigned char NES_Send_Bit(unsigned char data);
 void NES_main(void);
-void NES_INTERRUPT(void);
+
 #endif //NES_H

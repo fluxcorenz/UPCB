@@ -2,7 +2,6 @@
 UPCB - Universal Programmed Controller Board 
 Copyright (C) 2007  Marcus Post marcus@marcuspost.com
 
-
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 2
@@ -20,69 +19,69 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <p18cxxx.h>
 #include "nes.h"
 #include "upcb.h"
-#include "delays.h"
-void NES_Init_Pins(void)
-{
-	TRISBbits.TRISB0=INPUT; // #define NES_CLOCK 		PORTBbits.RB0
-	TRISCbits.TRISC6=INPUT; // #define NES_LATCH 		PORTCbits.RC6
-	TRISCbits.TRISC7=OUTPUT; // #define NES_DATA		LATCbits.LATC7		
-	NES_DATA=0;
+
+void NES_Init_Pins(void) {
+	TRISBbits.TRISB0=INPUT; // #define NES_CLOCK 	PORTBbits.RB0
+	TRISCbits.TRISC6=INPUT; // #define NES_LATCH 	PORTCbits.RC6
+	TRISCbits.TRISC7=OUTPUT; // #define NES_DATA	LATCbits.LATC7		
 }
 
-unsigned char NES_Send_Bit(unsigned char data)
-/* dat should be sent as soona s the clock is High. If we start High, immediately set data
-	high. If we're here on Low, wait for High first. 
-	After setting the data, sit and spin until the clock drops.  */
-
-{
-		while (!NES_CLOCK) if (NES_LATCH) return 1;//wait until rising edge, or go straight ahead if already high
-		NES_DATA=data;	
-		while (NES_CLOCK) if (NES_LATCH) return 1;//wait for falling edge
-		return 0;
-		//viola, it is now low.continue on
-}
-
-
-void NES_main(void)
-{
+void NES_main(void) {
 	unsigned char bU, bD, bL, bR, bSt, bSe, bB, bA;
 	bU=bD=bL=bR=bSt=bSe=bB=bA=1;
 	NES_Init_Pins();
 	NES_DATA=0;
 
-	while(1) {
-		if (NES_LATCH) { //we've seen the latch, store the state & perform output procedure
+	while (!NES_LATCH) {} //latch high=start of data
 
-			bA=Stick_Forward;		
-			bB=Stick_Short;	
-			bSe=Stick_Select;
-			bSt=Stick_Start;
-			bU=Stick_Up;
-			bD=Stick_Down;
-			bL=Stick_Left;
-			bR=Stick_Right;
-	
-			//send the first output (A) until the first clock.
-			NES_DATA=bA;
-			//now wait for the nes clocks, and send the remaining 
-			//outputs in order (B,Sel,St,U,D,L,R)
-			while(!NES_CLOCK);
-			NES_DATA=bB;
-			while(!NES_CLOCK);
-			NES_DATA=bSe;
-			while(!NES_CLOCK);
-			NES_DATA=bSt;
-			while(!NES_CLOCK);
-			NES_DATA=bU;
-			while(!NES_CLOCK);
-			NES_DATA=bD;
-			while(!NES_CLOCK);
-			NES_DATA=bL;
-			while(!NES_CLOCK);
-			NES_DATA=bR;
-			while(!NES_CLOCK); //the final clock signals the end of this data.
-			NES_DATA=0;
-			FrameUpdate();
+	while(1) {
+		//Latch should be high at this point.
+		//send the first output (A) until the first clock.
+		NES_DATA=bA;
+		while(NES_CLOCK) {} //wait until clock is low (value read by NES)
+		
+		//now wait for the nes clocks, and send the remaining 
+		//outputs in order (B,Sel,St,U,D,L,R)
+		while(!NES_CLOCK) {} //clock high = set data
+		NES_DATA=bB; //start sending next bit of data
+		while(NES_CLOCK) {} //clock low = NES reads data
+
+		while(!NES_CLOCK) {}
+		NES_DATA=bSe;
+		while(NES_CLOCK) {}
+
+		while(!NES_CLOCK) {}
+		NES_DATA=bSt;
+		while(NES_CLOCK) {}
+
+		while(!NES_CLOCK) {}
+		NES_DATA=bU;
+		while(NES_CLOCK) {}
+
+		while(!NES_CLOCK) {}
+		NES_DATA=bD;
+		while(NES_CLOCK) {}
+
+		while(!NES_CLOCK) {}
+		NES_DATA=bL;
+		while(NES_CLOCK) {}
+
+		while(!NES_CLOCK) {}
+		NES_DATA=bR;
+		while(NES_CLOCK) {} //the final clock signals the end of this data.
+
+		NES_DATA=0;
+		FrameUpdate();
+
+		while (1) { //Now just buffer the inputs until we're latched again
+	 		bA=Stick_Forward; if (NES_LATCH) break;	
+			bB=Stick_Short; if (NES_LATCH) break;
+			bSe=Stick_Select; if (NES_LATCH) break;
+			bSt=Stick_Start; if (NES_LATCH) break;
+			bU=Stick_Up; if (NES_LATCH) break;
+			bD=Stick_Down; if (NES_LATCH) break;
+			bL=Stick_Left; if (NES_LATCH) break;
+			bR=Stick_Right; if (NES_LATCH) break;
 		}
 	}	
 }
