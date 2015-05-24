@@ -64,18 +64,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	15			Low
 
 	PAL NES have 'region locked' controllers - NTSC controllers 
-	won't work on them without modification. Either modify the 
-	PAL console (bridge the diodes on the boards on the controller
-        ports - see http://retrogamester.shitfaced.eu/2010/05/how-to-
-	be-able-to-use-any-controller-on.html), or you can use pull-up
-       	resistors between any High/VCC pin and the Latch and Clock 
-	pins (i.e. a resistor between pin 8 and 12, and another 
-	between 8 and 13). The value for these resistors in an 
-	official PAL NES pad is 3.6k ohm, however 4.7k or 5k will 
-	probably work as well.
-        Unfortunately I've had problems with using this code on a PAL
-	NES with an XBOX360 pad piggybacked. Unplugging the piggyback
-	fixes the issue.	
+	won't work on them without modification. 
+	Either:
+       	* Modify the PAL console (bridge the diodes on the boards 
+	on the controller ports - see http://retrogamester.shitfaced.eu/2010/05/how-to- be-able-to-use-any-controller-on.html), 
+	Or:
+       	* Use pull-up resistors between any High/VCC pin and the 
+	Latch and Clock pins (i.e. a resistor between pin 8 and 12,
+       	and another between 8 and 13). The value for these resistors
+       	in an official PAL NES pad is 3.6k ohm, however 4.7k or 5k
+       	will probably work as well. Unfortunately I've had problems
+       	with this method on a PAL NES with an XBOX360 pad piggybacked.
+      	Unplugging the piggyback fixes the issue, or just modify the
+	console.	
 	
 	Protocol:
 	At rest, Latch is low, clock is high, and data is low. 
