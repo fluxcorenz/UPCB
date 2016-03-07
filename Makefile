@@ -11,7 +11,7 @@ CCFLAGS = -p=18F4550 -pa=5
 MLIB = c:\Program Files (x86)\Microchip\mplabc18\v3.47\h
 OUTPUT = _output
 OBJ = obj
-DEFFLAGS = 
+DEFFLAGS = -DNONE 
 
 "create_dirs": 
 	@if not exist $(OUTPUT) mkdir $(OUTPUT)
@@ -19,10 +19,24 @@ DEFFLAGS =
 
 all: "create_dirs" "$(OUTPUT)\UPCB.cof"
 
-"$(OUTPUT)\UPCB.cof" : "$(OBJ)\main.o" "$(OBJ)\neogeo.o" "$(OBJ)\psx.o" "$(OBJ)\saturn.o" "$(OBJ)\genesis.o" "$(OBJ)\tg16.o" "$(OBJ)\snes.o" "$(OBJ)\nes.o" "$(OBJ)\jaguar.o" "$(OBJ)\x68000.o" "$(OBJ)\3do.o" "$(OBJ)\program.o" "$(OBJ)\gc.o" "$(OBJ)\piggy.o" "$(OBJ)\upcb.o" "$(OBJ)\cd32.o" "$(OBJ)\wii.o" "$(OBJ)\inttest.o" "$(OBJ)\allusb.o" "$(OBJ)\ps3usb.o" "$(OBJ)\xboxusb.o" "$(OBJ)\n64.o"
-	$(LD) /p18F4550 "rm18f4550.lkr" "$(OBJ)\main.o" "$(OBJ)\neogeo.o" "$(OBJ)\psx.o" "$(OBJ)\saturn.o" "$(OBJ)\genesis.o" "$(OBJ)\tg16.o" "$(OBJ)\snes.o" "$(OBJ)\nes.o" "$(OBJ)\jaguar.o" "$(OBJ)\x68000.o" "$(OBJ)\3do.o" "$(OBJ)\program.o" "$(OBJ)\gc.o" "$(OBJ)\piggy.o" "$(OBJ)\upcb.o" "$(OBJ)\cd32.o" "$(OBJ)\wii.o" "$(OBJ)\inttest.o" "$(OBJ)\allusb.o" "$(OBJ)\ps3usb.o" "$(OBJ)\xboxusb.o" "$(OBJ)\n64.o" /u_CRUNTIME /z__MPLAB_BUILD=1 /m"$(OUTPUT)\UPCB.map" /o"$(OUTPUT)\UPCB.cof"
+"$(OUTPUT)\UPCB.cof" : "$(OBJ)\main.o" "$(OBJ)\neogeo.o" "$(OBJ)\psx.o" "$(OBJ)\saturn.o" \
+       		"$(OBJ)\genesis.o" "$(OBJ)\tg16.o" "$(OBJ)\snes.o" "$(OBJ)\nes.o" \
+		"$(OBJ)\jaguar.o" "$(OBJ)\x68000.o" "$(OBJ)\3do.o" "$(OBJ)\program.o" \
+		"$(OBJ)\gc.o" "$(OBJ)\piggy.o" "$(OBJ)\upcb.o" "$(OBJ)\cd32.o" \
+		"$(OBJ)\wii.o" "$(OBJ)\inttest.o" "$(OBJ)\allusb.o" "$(OBJ)\ps3usb.o" \
+		"$(OBJ)\xboxusb.o" "$(OBJ)\n64.o" "$(OBJ)\saturn3d.o"
+	$(LD) /p18F4550 "rm18f4550.lkr" "$(OBJ)\main.o" "$(OBJ)\neogeo.o" "$(OBJ)\psx.o" \
+		"$(OBJ)\saturn.o" "$(OBJ)\genesis.o" "$(OBJ)\tg16.o" "$(OBJ)\snes.o" \
+		"$(OBJ)\nes.o" "$(OBJ)\jaguar.o" "$(OBJ)\x68000.o" "$(OBJ)\3do.o" \
+		"$(OBJ)\program.o" "$(OBJ)\gc.o" "$(OBJ)\piggy.o" "$(OBJ)\upcb.o" \
+		"$(OBJ)\cd32.o" "$(OBJ)\wii.o" "$(OBJ)\inttest.o" "$(OBJ)\allusb.o" \
+		"$(OBJ)\ps3usb.o" "$(OBJ)\xboxusb.o" "$(OBJ)\n64.o" "$(OBJ)\saturn3d.o" \
+		/u_CRUNTIME /z__MPLAB_BUILD=1 /m"$(OUTPUT)\UPCB.map" /o"$(OUTPUT)\UPCB.cof"
 
-"$(OBJ)\main.o" : "main.c" "$(MLIB)\delays.h" "upcb.h" "nes.h" "snes.h" "gc.h" "piggy.h" "main.c" "c:\Program Files (x86)\Microchip\mplabc18\v3.47\h\p18cxxx.h" "$(MLIB)\p18f4550.h" "config.h" "program.h" "neogeo.h" "psx.h" "saturn.h" "genesis.h" "tg16.h" "jaguar.h" "x68000.h" "3do.h" "cd32.h" "wii.h" "inttest.h" "allusb.h" "ps3usb.h" "xboxusb.h" "n64.h"
+"$(OBJ)\main.o" : "main.c" "$(MLIB)\delays.h" "upcb.h" "nes.h" "snes.h" "gc.h" "piggy.h" \
+	"main.c" "$(MLIB)\p18cxxx.h" "$(MLIB)\p18f4550.h" "config.h" "program.h" "neogeo.h" \
+	"psx.h" "saturn.h" "genesis.h" "tg16.h" "jaguar.h" "x68000.h" "3do.h" "cd32.h" \
+	"wii.h" "inttest.h" "allusb.h" "ps3usb.h" "xboxusb.h" "n64.h" "saturn3d.h"
 	$(CC) $(CCFLAGS) $(DEFFLAGS) /i"$(MLIB)" "main.c" -fo="$(OBJ)\main.o"
 
 "$(OBJ)\neogeo.o" : "neogeo.c" "upcb.h" "$(MLIB)\timers.h" "neogeo.c" "$(MLIB)\p18cxxx.h" "$(MLIB)\p18f4550.h" "neogeo.h" "config.h" "program.h" "$(MLIB)\pconfig.h"
@@ -33,6 +47,9 @@ all: "create_dirs" "$(OUTPUT)\UPCB.cof"
 
 "$(OBJ)\saturn.o" : "saturn.c" "upcb.h" "saturn.c" "saturn.h" "config.h" "program.h" "$(MLIB)\p18cxxx.h" "$(MLIB)\p18f4550.h" "inttest.h"
 	$(CC) $(CCFLAGS) $(DEFFLAGS) /i"$(MLIB)" "saturn.c" -fo="$(OBJ)\saturn.o"
+
+"$(OBJ)\saturn3d.o" : "saturn3d.c" "upcb.h" "saturn3d.c" "saturn3d.h" "config.h" "program.h" "$(MLIB)\p18cxxx.h" "$(MLIB)\p18f4550.h" "inttest.h"
+	$(CC) $(CCFLAGS) $(DEFFLAGS) /i"$(MLIB)" "saturn3d.c" -fo="$(OBJ)\saturn3d.o"
 
 "$(OBJ)\genesis.o" : "genesis.c" "upcb.h" "$(MLIB)\timers.h" "genesis.c" "$(MLIB)\p18cxxx.h" "$(MLIB)\p18f4550.h" "genesis.h" "config.h" "program.h" "$(MLIB)\pconfig.h"
 	$(CC) $(CCFLAGS) $(DEFFLAGS) /i"$(MLIB)" "genesis.c" -fo="$(OBJ)\genesis.o"

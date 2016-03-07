@@ -133,9 +133,14 @@ void main(void)
 		&&  (!PORTBbits.RB3)
 		&&  (!PORTBbits.RB2) )	
 	{ //its a member of this family
-		//only entry so far is the Amiga CD32, so let's run it. 
-		Program_Load_Mappings(SMA_CD32);
-		CD32_main();
+		if (PORTEbits.RE2) { //then it's the saturn 3d controller
+			Program_Load_Mappings(SMA_SATURN3D);
+			SATURN3D_main();
+		} else {
+			//if not, it's the Amiga CD32. 
+			Program_Load_Mappings(SMA_CD32);
+			CD32_main();
+		}
 	}
 	
 	
