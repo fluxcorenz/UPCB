@@ -56,14 +56,14 @@ void SATURN3D_main (void) {
 
 		mLED_2_Toggle();
 
-		while (!SATURN3D_REQ) {} //wait for data request toggle
+		while (!SATURN3D_REQ && !SATURN3D_SEL) {} //wait for data request toggle
 
 		//now send the data size
 		//only 2 bytes of data for digital, so = 0010
 		SATURN3D_D1 = 1;
 		SATURN3D_ACK = 1; //tell saturn we're clear to send first nibble
 
-		while (SATURN3D_REQ) {} //wait for data request toggle
+		while (SATURN3D_REQ && !SATURN3D_SEL) {} //wait for data request toggle
 
 		//now send directions, UDLR
 		SATURN3D_D0 = Stick_Up;
@@ -72,7 +72,7 @@ void SATURN3D_main (void) {
 		SATURN3D_D3 = Stick_Right;
 		SATURN3D_ACK = 0;
 
-		while (!SATURN3D_REQ) {} //wait for data request toggle
+		while (!SATURN3D_REQ && !SATURN3D_SEL) {} //wait for data request toggle
 
 		//now send kick buttons, in order B/C/A/Start
 		SATURN3D_D0 = Stick_Forward;
@@ -81,7 +81,7 @@ void SATURN3D_main (void) {
 		SATURN3D_D3 = Stick_Start;
 		SATURN3D_ACK = 1;
 			
-		while (SATURN3D_REQ) {} //wait for data request toggle
+		while (SATURN3D_REQ && !SATURN3D_SEL) {} //wait for data request toggle
 
 		//now send punch buttons, in order ZYXR
 		SATURN3D_D0 = Stick_Fierce;
@@ -94,7 +94,7 @@ void SATURN3D_main (void) {
 #endif
 		SATURN3D_ACK = 0;
 		
-		while (!SATURN3D_REQ) {} //wait for data request toggle
+		while (!SATURN3D_REQ && !SATURN3D_SEL) {} //wait for data request toggle
 
 		//now send the final nibble of data
 		SATURN3D_D0 = SATURN3D_D1 = SATURN3D_D2 = 1;
@@ -105,14 +105,14 @@ void SATURN3D_main (void) {
 #endif
 		SATURN3D_ACK = 1;
 
-		while (SATURN3D_REQ) {} //wait for data request toggle
+		while (SATURN3D_REQ && !SATURN3D_SEL) {} //wait for data request toggle
 
 		//we have an 'end byte' to send now
 		//first nibble = 0000
 		SATURN3D_D0 = SATURN3D_D1 = SATURN3D_D2 = SATURN3D_D3 = 0;
 		SATURN3D_ACK = 0; //tell saturn we're clear to send
 
-		while (!SATURN3D_REQ) {} //wait for data request toggle
+		while (!SATURN3D_REQ && !SATURN3D_SEL) {} //wait for data request toggle
 
 		//second nibble = 0001
 		SATURN3D_D0 = 1;

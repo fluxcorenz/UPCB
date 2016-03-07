@@ -61,6 +61,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	The 3D controller also uses pin 6 to signal to the Saturn that it has data
 	which should be read.
 
+	Big thanks to RDC over at nfggames.com for helping out with the protocol - http://nfggames.com/forum2/index.php?topic=5055.0
 	
 */
 
