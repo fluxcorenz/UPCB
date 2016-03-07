@@ -1,0 +1,5 @@
+defflags = -DEXTRA_BUTTONS -DPROGRAM_BUTTON
+
+include base.ninja
+
+default UPCB.cof

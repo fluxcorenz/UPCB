@@ -1,0 +1,5 @@
+defflags = -DNONE
+
+include base.ninja
+
+default UPCB.cof

@@ -1,0 +1,5 @@
+defflags = -DPROGRAM_BUTTON -DSTATUS_LEDS
+
+include base.ninja
+
+default UPCB.cof

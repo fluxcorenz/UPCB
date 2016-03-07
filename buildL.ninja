@@ -1,0 +1,5 @@
+defflags = -DSTATUS_LEDS
+
+include base.ninja
+
+default UPCB.cof

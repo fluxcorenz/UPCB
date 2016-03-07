@@ -62,13 +62,20 @@ The UPCB can be updated anytime without even needing to open the stick, and with
 ## Building
 
 ### Requirements:
-- NMake (available with Windows SDK)
+- [Ninja](https://ninja-build.org/)
 - Microchip C18 compiler (with pa optimisation enabled - available in trial version for 60 days)
 
-To compile the upcb.hex file into the _output directory with default options, run 
+To compile the upcb.hex file, first edit the `base.ninja` file, and change the `mlib` variable to point at your microchip c18 headers path, e.g. `mlib = c:/microchip/c18/h`
 
-`nmake all`
+Then run:
 
-If your Microchip libraries have been installed into another location, specify the `MLIB` option, e.g. `nmake "MLIB=c:\microchip\c18\h" all`
+`ninja.exe -f <build?.ninja>`
 
-Set DEFFLAGS options as per config.h for other build options, for example to build with LEDs and programming button, run `nmake "DEFFLAGS=-DPROGRAM_BUTTON -DSTATUS_LEDS" all`
+Where '?' is your target UPCB option:
+
+- X for no options
+- XP for programming button
+- B for extra buttons
+- BP for extra buttons and programming button
+- L for status LEDS
+- LP for status LEDS and programming button

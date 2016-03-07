@@ -1,0 +1,56 @@
+ccflags = -p=18F4550 -pa=5
+mlib = d:/mplab/h
+ldflags = /p18F4550 "rm18f4550.lkr" /u_CRUNTIME /z__MPLAB_BUILD=1 /m"UPCB.map"
+
+rule cc
+    command = mcc18 $ccflags $defflags /i"$mlib" "$in" -fo="$out"
+
+rule ld
+    command = mplink $ldflags $in /o"$out"
+
+build UPCB.cof: ld main.o neogeo.o psx.o saturn.o genesis.o tg16.o snes.o nes.o jaguar.o x68000.o 3do.o program.o gc.o piggy.o upcb.o cd32.o wii.o inttest.o allusb.o ps3usb.o xboxusb.o n64.o saturn3d.o
+
+build neogeo.o: cc neogeo.c
+
+build psx.o: cc psx.c
+
+build saturn.o: cc saturn.c
+
+build saturn3d.o: cc saturn3d.c
+
+build genesis.o: cc genesis.c
+
+build tg16.o: cc tg16.c
+
+build snes.o: cc snes.c
+
+build nes.o: cc nes.c
+
+build jaguar.o: cc jaguar.c
+
+build x68000.o: cc x68000.c
+
+build 3do.o: cc 3do.c
+
+build gc.o: cc gc.c
+
+build n64.o: cc n64.c
+
+build piggy.o: cc piggy.c
+
+build cd32.o: cc cd32.c
+
+build wii.o: cc wii.c
+
+build ps3usb.o: cc ps3usb.c
+
+build xboxusb.o: cc xboxusb.c
+
+build allusb.o: cc allusb.c
+
+build inttest.o: cc inttest.c
+
+build upcb.o: cc upcb.c
+build program.o: cc program.c
+
+build main.o: cc main.c
