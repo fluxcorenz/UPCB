@@ -1,0 +1,14 @@
+
+#objects
+*.o
+
+#compiled
+*.map
+*.cof
+*.hex
+
+#logging
+*.err
+
+#misc
+*.zip
