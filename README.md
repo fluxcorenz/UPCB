@@ -32,23 +32,21 @@ The UPCB can be updated anytime without even needing to open the stick, and with
   - Sega Saturn
   - Sega Genesis (3 and 6 button)
   - N64
-
+  - TurboGrafx-16/PC Engine (2 and 6 button)
 
 - Coded and believed to work, but not tested:
   - Sega MasterSystem
-  - TurboGrafx-16 (2 and 6 button)
   - Atari Jaguar
   - 3DO
   - FM-Towns
   - X68000 (2 button)
   - Amiga CD32
-  - Most old DB-9 controller systems from the 80's like Commodore 64's.
-
+  - Most old DB-9 controller systems from the 80s like Commodore 64s.
 
 ## Other features:
 - On-the-Fly button remapping using a Programming button
   
-  Hold the button you want to remap, press the programming button, hold down the buttons you want the original button to be (or none if you want the button disabled), release the programming button.
+  Hold the button you want to remap, press the programming button, hold down the buttons you want the original button to be (or none if you want the button disabled), release the programming button. Supported by most systems.
 - Ability to make your mappings permanent
 
   Hold down the programming button, press start three times. Mappings are different for each system, so your NeoGeo mapping can be totally different from your PSX mapping.
@@ -69,7 +67,7 @@ To compile the upcb.hex file, first edit the `base.ninja` file, and change the `
 
 Then run:
 
-`ninja.exe -f <build?.ninja>`
+`ninja.exe -f build?.ninja`
 
 Where '?' is your target UPCB option:
 
